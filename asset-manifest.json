@@ -1,12 +1,15 @@
 {
   "files": {
-    "main.js": "/smart-display-ui/static/js/main.92fab5ce.js",
+    "main.css": "/smart-display-ui/static/css/main.91575af3.css",
+    "main.js": "/smart-display-ui/static/js/main.a9e0d048.js",
     "static/js/787.42f54e59.chunk.js": "/smart-display-ui/static/js/787.42f54e59.chunk.js",
     "index.html": "/smart-display-ui/index.html",
-    "main.92fab5ce.js.map": "/smart-display-ui/static/js/main.92fab5ce.js.map",
+    "main.91575af3.css.map": "/smart-display-ui/static/css/main.91575af3.css.map",
+    "main.a9e0d048.js.map": "/smart-display-ui/static/js/main.a9e0d048.js.map",
     "787.42f54e59.chunk.js.map": "/smart-display-ui/static/js/787.42f54e59.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.92fab5ce.js"
+    "static/css/main.91575af3.css",
+    "static/js/main.a9e0d048.js"
   ]
 }

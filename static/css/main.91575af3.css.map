@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.91575af3.css","mappings":"AAAA,KACE,qBAAsB,CACtB,UAAW,CACX,sCACF,CAEA,WACE,eAAgB,CAChB,iBACF","sources":["app.css"],"sourcesContent":["body {\n  background-color: #000;\n  color: #fff;\n  font-family: Arial, Helvetica, sans-serif;\n}\n\n.time-text {\n  font-size: 250px;\n  text-align: center;\n}\n"],"names":[],"sourceRoot":""}
