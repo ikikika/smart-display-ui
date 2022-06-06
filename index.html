@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Display UI</title>
+  </head>
+  <body>
+    <div class="container"></div>
+  </body>
+
+  <script>
+    async function getBus() {
+      let url =
+        "https://api.codetabs.com/v1/proxy/?quest=https://www.nextbuses.sg/api.php?stop=21591";
+      try {
+        let res = await fetch(url);
+        return await res.json();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    async function renderBus() {
+      let buses = await getBus();
+      console.log(buses);
+    }
+
+    renderBus();
+  </script>
+</html>
