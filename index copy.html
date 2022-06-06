@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Display UI</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background-color: #000;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      #time-div {
+        color: #fff;
+        font-size: 250px;
+        text-align: center;
+      }
+      table {
+        color: #fff;
+      }
+      th,
+      td {
+        width: 20%;
+        border: 1px solid #fff;
+        font-size: 50px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body onload="startTime()">
+    <div id="time-div"></div>
+    <div class="container" style="">
+      <table>
+        <thead>
+          <tr>
+            <th>Bus</th>
+            <th>Next</th>
+            <th>Subsequent</th>
+          </tr>
+        </thead>
+        <tbody class="busInfo"></tbody>
+      </table>
+    </div>
+  </body>
+
+  <script type="text/javascript" src="jquery-1.12.4.min.js"></script>
+  <script type="text/javascript">
+    function startTime() {
+      var today = new Date();
+      var h = today.getHours();
+      var m = today.getMinutes();
+      var s = today.getSeconds();
+      m = checkTime(m);
+      s = checkTime(s);
+      document.getElementById("time-div").innerHTML = h + ":" + m + ":" + s;
+      setTimeout(startTime, 1000);
+    }
+
+    function checkTime(i) {
+      if (i < 10) {
+        i = "0" + i;
+      } // add zero in front of numbers < 10
+      return i;
+    }
+
+    async function getBus() {
+      var url =
+        "https://api.codetabs.com/v1/proxy/?quest=https://www.nextbuses.sg/api.php?stop=21591";
+      try {
+        var res = await fetch(url);
+        return await res.json();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    async function renderBus() {
+      var buses = await getBus();
+      var html = "";
+
+      var busesData = buses.data;
+
+      for (var bus in busesData) {
+        var next = busesData[bus]["eta"][0];
+        if (next === 0) {
+          next = "Arriving";
+        }
+
+        var subsequent = busesData[bus]["eta"][1];
+        if (subsequent === 0) {
+          subsequent = "Arriving";
+        }
+
+        var htmlSegment =
+          "\n                            <tr>\n                                <td>" +
+          bus +
+          "</td>\n                                <td>" +
+          next +
+          "</td>\n                                <td>" +
+          subsequent +
+          "</td>\n                            </tr>\n                        ";
+        html = html + htmlSegment;
+      }
+
+      var busInfoHTML = document.querySelector(".busInfo");
+      busInfoHTML.innerHTML = html;
+    }
+    // setInterval(renderBus(), 5000);
+
+    try {
+      setInterval(function () {
+        renderBus();
+      }, 10000);
+    } catch (e) {
+      console.error(e);
+    }
+  </script>
+</html>
