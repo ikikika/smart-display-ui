@@ -4,12 +4,60 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Smart Display UI</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background-color: #000;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      #time-div {
+        color: #fff;
+        font-size: 250px;
+        text-align: center;
+      }
+      table {
+        color: #fff;
+      }
+    </style>
   </head>
-  <body>
-    <div class="container"></div>
+  <body onload="startTime()">
+    <div id="time-div"></div>
+    <div class="container">
+      <table>
+        <thead>
+          <tr>
+            <th>Bus</th>
+            <th>Next</th>
+            <th>Subsequent</th>
+          </tr>
+        </thead>
+        <tbody class="busInfo"></tbody>
+      </table>
+    </div>
   </body>
 
   <script>
+    function startTime() {
+      const today = new Date();
+      let h = today.getHours();
+      let m = today.getMinutes();
+      let s = today.getSeconds();
+      m = checkTime(m);
+      s = checkTime(s);
+      document.getElementById("time-div").innerHTML = h + ":" + m + ":" + s;
+      setTimeout(startTime, 1000);
+    }
+
+    function checkTime(i) {
+      if (i < 10) {
+        i = "0" + i;
+      } // add zero in front of numbers < 10
+      return i;
+    }
+
     async function getBus() {
       let url =
         "https://api.codetabs.com/v1/proxy/?quest=https://www.nextbuses.sg/api.php?stop=21591";
@@ -23,9 +71,42 @@
 
     async function renderBus() {
       let buses = await getBus();
-      console.log(buses);
-    }
+      let html = ``;
 
-    renderBus();
+      let busesData = buses.data;
+
+      for (const bus in busesData) {
+        let next = busesData[bus]["eta"][0];
+        if (next === 0) {
+          next = "Arriving";
+        }
+
+        let subsequent = busesData[bus]["eta"][1];
+        if (subsequent === 0) {
+          subsequent = "Arriving";
+        }
+
+        let htmlSegment = `
+                            <tr>
+                                <td>${bus}</td>
+                                <td>${next}</td>
+                                <td>${subsequent}</td>
+                            </tr>
+                        `;
+        html = html + htmlSegment;
+      }
+
+      let busInfoHTML = document.querySelector(".busInfo");
+      busInfoHTML.innerHTML = html;
+    }
+    // setInterval(renderBus(), 5000);
+
+    try {
+      setInterval(function () {
+        renderBus();
+      }, 10000);
+    } catch (e) {
+      console.error(e);
+    }
   </script>
 </html>
