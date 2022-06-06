@@ -48,10 +48,10 @@
 
   <script>
     function startTime() {
-      const today = new Date();
-      let h = today.getHours();
-      let m = today.getMinutes();
-      let s = today.getSeconds();
+      var today = new Date();
+      var h = today.getHours();
+      var m = today.getMinutes();
+      var s = today.getSeconds();
       m = checkTime(m);
       s = checkTime(s);
       document.getElementById("time-div").innerHTML = h + ":" + m + ":" + s;
@@ -66,10 +66,10 @@
     }
 
     async function getBus() {
-      let url =
+      var url =
         "https://api.codetabs.com/v1/proxy/?quest=https://www.nextbuses.sg/api.php?stop=21591";
       try {
-        let res = await fetch(url);
+        var res = await fetch(url);
         return await res.json();
       } catch (error) {
         console.log(error);
@@ -77,33 +77,34 @@
     }
 
     async function renderBus() {
-      let buses = await getBus();
-      let html = ``;
+      var buses = await getBus();
+      var html = "";
 
-      let busesData = buses.data;
+      var busesData = buses.data;
 
-      for (const bus in busesData) {
-        let next = busesData[bus]["eta"][0];
+      for (var bus in busesData) {
+        var next = busesData[bus]["eta"][0];
         if (next === 0) {
           next = "Arriving";
         }
 
-        let subsequent = busesData[bus]["eta"][1];
+        var subsequent = busesData[bus]["eta"][1];
         if (subsequent === 0) {
           subsequent = "Arriving";
         }
 
-        let htmlSegment = `
-                            <tr>
-                                <td>${bus}</td>
-                                <td>${next}</td>
-                                <td>${subsequent}</td>
-                            </tr>
-                        `;
+        var htmlSegment =
+          "\n                            <tr>\n                                <td>" +
+          bus +
+          "</td>\n                                <td>" +
+          next +
+          "</td>\n                                <td>" +
+          subsequent +
+          "</td>\n                            </tr>\n                        ";
         html = html + htmlSegment;
       }
 
-      let busInfoHTML = document.querySelector(".busInfo");
+      var busInfoHTML = document.querySelector(".busInfo");
       busInfoHTML.innerHTML = html;
     }
     // setInterval(renderBus(), 5000);
