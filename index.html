@@ -15,7 +15,7 @@
       }
       #time-div {
         color: #fff;
-        font-size: 200px;
+        font-size: 250px;
         text-align: center;
       }
       table {
@@ -122,7 +122,17 @@
         });
       }
 
-      getBuses();
+      setInterval(function () {
+        getBuses();
+      }, 10000);
+
+      // try {
+      //   setInterval(function () {
+      //     getBuses();
+      //   }, 10000);
+      // } catch (e) {
+      //   console.error(e);
+      // }
     });
   </script>
 </html>
