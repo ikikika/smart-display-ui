@@ -44,6 +44,7 @@
         </thead>
         <tbody class="busInfo"></tbody>
       </table>
+      <input type="hidden" id="querytime" value="" />
     </div>
   </body>
 
@@ -73,6 +74,14 @@
         // if (h > 12) {
         //   h = h - 12;
         // }
+
+        if (h >= 5 && m > 30) {
+          $("#querytime").val("start");
+        } else if (h > 0 && h < 5 && m > 30) {
+          $("#querytime").val("stop");
+        }
+
+        h = h < 10 ? (h = "0" + h) : h;
         m = m < 10 ? (m = "0" + m) : m;
         s = s < 10 ? (s = "0" + s) : s;
 
@@ -105,25 +114,31 @@
               }
 
               var htmlSegment =
-                "\n                            <tr>\n                                <td>" +
+                "<tr><td>" +
                 bus +
-                "</td>\n                                <td>" +
+                "</td><td>" +
                 next +
-                "</td>\n                                <td>" +
+                "</td><td>" +
                 subsequent +
-                "</td>\n                            </tr>\n                        ";
+                "</td></tr>";
               html = html + htmlSegment;
             }
             $(".busInfo").html(html);
           },
           error: function (error) {
-            $(".busInfo").html("<tr><td colspan='3'>Error</td></tr>");
+            $(".busInfo").html("<tr><td colspan='3'><br/>Error<br/></td></tr>");
           },
         });
       }
 
       setInterval(function () {
-        getBuses();
+        if ($("#querytime").val() === "start") {
+          getBuses();
+        } else if ($("#querytime").val() === "stop") {
+          $(".busInfo").html(
+            "<tr><td colspan='3'><br/>No More Bus<br/><br/></td></tr>"
+          );
+        }
       }, 10000);
 
       // try {
