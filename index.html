@@ -15,11 +15,12 @@
       }
       #time-div {
         color: #fff;
-        font-size: 250px;
+        font-size: 200px;
         text-align: center;
       }
       table {
         color: #fff;
+        margin: auto;
       }
       th,
       td {
@@ -32,7 +33,7 @@
   </head>
   <body>
     <div id="time-div"></div>
-    <div class="container" style="">
+    <div class="container">
       <table>
         <thead>
           <tr>
@@ -49,8 +50,6 @@
   <script type="text/javascript" src="jquery-1.12.4.min.js"></script>
   <script type="text/javascript">
     $(document).ready(function () {
-      $("body").css("background-color", "red");
-
       function showTime() {
         // to get current time/ date.
         var date = new Date();
@@ -86,6 +85,44 @@
         setTimeout(showTime, 1000);
       }
       showTime();
+
+      function getBuses() {
+        $.ajax({
+          url: "https://api.codetabs.com/v1/proxy/?quest=https://www.nextbuses.sg/api.php?stop=21591",
+          success: function (response) {
+            var html = "";
+            var busesData = response.data;
+
+            for (var bus in busesData) {
+              var next = busesData[bus]["eta"][0];
+              if (next === 0) {
+                next = "Arriving";
+              }
+
+              var subsequent = busesData[bus]["eta"][1];
+              if (subsequent === 0) {
+                subsequent = "Arriving";
+              }
+
+              var htmlSegment =
+                "\n                            <tr>\n                                <td>" +
+                bus +
+                "</td>\n                                <td>" +
+                next +
+                "</td>\n                                <td>" +
+                subsequent +
+                "</td>\n                            </tr>\n                        ";
+              html = html + htmlSegment;
+            }
+            $(".busInfo").html(html);
+          },
+          error: function (error) {
+            $(".busInfo").html("<tr><td colspan='3'>Error</td></tr>");
+          },
+        });
+      }
+
+      getBuses();
     });
   </script>
 </html>
