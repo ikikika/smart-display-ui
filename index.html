@@ -128,8 +128,13 @@
               html = html + htmlSegment;
             }
             if (html === "") {
-              html = "<tr><td colspan='3'><br/>Loading...<br/></td></tr>";
+              html =
+                "<tr><td colspan='3'><br/>" +
+                JSON.stringify(response) +
+                "<br/></td></tr>";
             }
+
+            console.log(html);
             $(".busInfo").html(html);
           },
           error: function (error) {
