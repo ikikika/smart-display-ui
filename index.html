@@ -42,7 +42,11 @@
             <th>Subsequent</th>
           </tr>
         </thead>
-        <tbody class="busInfo"></tbody>
+        <tbody class="busInfo">
+          <tr>
+            <td colspan="3"><br />Starting...<br /></td>
+          </tr>
+        </tbody>
       </table>
       <input type="hidden" id="querytime" value="" />
     </div>
@@ -123,6 +127,9 @@
                 "</td></tr>";
               html = html + htmlSegment;
             }
+            if (html === "") {
+              html = "<tr><td colspan='3'><br/>Loading...<br/></td></tr>";
+            }
             $(".busInfo").html(html);
           },
           error: function (error) {
@@ -139,7 +146,7 @@
             "<tr><td colspan='3'><br/>No More Bus<br/><br/></td></tr>"
           );
         }
-      }, 10000);
+      }, 30000);
 
       // try {
       //   setInterval(function () {
