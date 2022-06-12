@@ -26,13 +26,14 @@
       td {
         width: 20%;
         border: 1px solid #fff;
-        font-size: 50px;
+        font-size: 45px;
         text-align: center;
       }
     </style>
   </head>
   <body>
     <div id="time-div"></div>
+    <button id="manual-refresh">Refresh</button>
     <div class="container">
       <table>
         <thead>
@@ -44,7 +45,7 @@
         </thead>
         <tbody class="busInfo">
           <tr>
-            <td colspan="3"><br />Starting...<br /></td>
+            <td colspan="3"><br />Starting...<br /><br /></td>
           </tr>
         </tbody>
       </table>
@@ -79,9 +80,15 @@
         //   h = h - 12;
         // }
 
-        if ((h >= 5 && m > 30) || h > 5) {
+        if (h === 5 && m === 30 && s === 00) {
+          location.reload();
+        }
+
+        if ((h >= 5 && h < 10 && m > 30) || (h > 5 && h < 10)) {
           $("#querytime").val("start");
         } else if (h > 1 && h < 5) {
+          $("#querytime").val("stop");
+        } else {
           $("#querytime").val("stop");
         }
 
@@ -148,7 +155,7 @@
           getBuses();
         } else if ($("#querytime").val() === "stop") {
           $(".busInfo").html(
-            "<tr><td colspan='3'><br/>No More Bus<br/><br/></td></tr>"
+            "<tr><td colspan='3'><br/>Stopped<br/><br/></td></tr>"
           );
         }
       }, 30000);
@@ -160,6 +167,13 @@
       // } catch (e) {
       //   console.error(e);
       // }
+
+      $("#manual-refresh").click(function () {
+        getBuses();
+        setInterval(function () {
+          location.reload();
+        }, 10000);
+      });
     });
   </script>
 </html>
