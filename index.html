@@ -55,7 +55,7 @@
 
   <script type="text/javascript" src="jquery-1.12.4.min.js"></script>
   <script type="text/javascript">
-    /*
+    
     $(document).ready(function () {
       function showTime() {
         // to get current time/ date.
@@ -107,59 +107,59 @@
       }
       showTime();
 
-      function getBuses() {
-        $.ajax({
-          url: "https://api.codetabs.com/v1/proxy/?quest=https://www.nextbuses.sg/api.php?stop=21591",
-          success: function (response) {
-            var html = "";
-            var busesData = response.data;
+//       function getBuses() {
+//         $.ajax({
+//           url: "https://api.codetabs.com/v1/proxy/?quest=https://www.nextbuses.sg/api.php?stop=21591",
+//           success: function (response) {
+//             var html = "";
+//             var busesData = response.data;
 
-            for (var bus in busesData) {
-              var next = busesData[bus]["eta"][0];
-              if (next === 0) {
-                next = "Arriving";
-              }
+//             for (var bus in busesData) {
+//               var next = busesData[bus]["eta"][0];
+//               if (next === 0) {
+//                 next = "Arriving";
+//               }
 
-              var subsequent = busesData[bus]["eta"][1];
-              if (subsequent === 0) {
-                subsequent = "Arriving";
-              }
+//               var subsequent = busesData[bus]["eta"][1];
+//               if (subsequent === 0) {
+//                 subsequent = "Arriving";
+//               }
 
-              var htmlSegment =
-                "<tr><td>" +
-                bus +
-                "</td><td>" +
-                next +
-                "</td><td>" +
-                subsequent +
-                "</td></tr>";
-              html = html + htmlSegment;
-            }
-            if (html === "") {
-              html =
-                "<tr><td colspan='3'><br/>" +
-                JSON.stringify(response) +
-                "<br/></td></tr>";
-            }
+//               var htmlSegment =
+//                 "<tr><td>" +
+//                 bus +
+//                 "</td><td>" +
+//                 next +
+//                 "</td><td>" +
+//                 subsequent +
+//                 "</td></tr>";
+//               html = html + htmlSegment;
+//             }
+//             if (html === "") {
+//               html =
+//                 "<tr><td colspan='3'><br/>" +
+//                 JSON.stringify(response) +
+//                 "<br/></td></tr>";
+//             }
 
-            console.log(html);
-            $(".busInfo").html(html);
-          },
-          error: function (error) {
-            $(".busInfo").html("<tr><td colspan='3'><br/>Error<br/></td></tr>");
-          },
-        });
-      }
+//             console.log(html);
+//             $(".busInfo").html(html);
+//           },
+//           error: function (error) {
+//             $(".busInfo").html("<tr><td colspan='3'><br/>Error<br/></td></tr>");
+//           },
+//         });
+//       }
 
-      setInterval(function () {
-        if ($("#querytime").val() === "start") {
-          getBuses();
-        } else if ($("#querytime").val() === "stop") {
-          $(".busInfo").html(
-            "<tr><td colspan='3'><br/>Stopped<br/><br/></td></tr>"
-          );
-        }
-      }, 30000);
+//       setInterval(function () {
+//         if ($("#querytime").val() === "start") {
+//           getBuses();
+//         } else if ($("#querytime").val() === "stop") {
+//           $(".busInfo").html(
+//             "<tr><td colspan='3'><br/>Stopped<br/><br/></td></tr>"
+//           );
+//         }
+//       }, 30000);
 
       // try {
       //   setInterval(function () {
@@ -169,13 +169,13 @@
       //   console.error(e);
       // }
 
-      $("#manual-refresh").click(function () {
-        getBuses();
-        setInterval(function () {
-          location.reload();
-        }, 10000);
-      });
+//       $("#manual-refresh").click(function () {
+//         getBuses();
+//         setInterval(function () {
+//           location.reload();
+//         }, 10000);
+//       });
     });
-    */
+    
   </script>
 </html>
